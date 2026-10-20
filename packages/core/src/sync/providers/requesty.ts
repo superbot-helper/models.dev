@@ -78,7 +78,12 @@ export type RequestyModel = z.infer<typeof RequestyModel>;
 // Util functions
 // ========================================
 
-export function buildRequestyModel(model: RequestyModel): SyncedModel {
+// A file linked to its lab by hand keeps that base_model when the resolver has
+// no match for the catalog ID.
+export function buildRequestyModel(
+    model: RequestyModel,
+    existingBaseModel?: string,
+): SyncedModel {
     const toolCall = model.supports_tool_calling;
     const structuredOutput = model.supports_output_json_schema;
     const context = model.context_window;
@@ -90,7 +95,7 @@ export function buildRequestyModel(model: RequestyModel): SyncedModel {
     const cost = buildCost(model);
     const reasoning = model.supports_reasoning;
 
-    const canonical = resolveRequestyBaseModel(model.id);
+    const canonical = resolveRequestyBaseModel(model.id) ?? existingBaseModel;
     if (canonical !== undefined) {
         return factorBaseModel(
             canonical,
@@ -265,10 +270,10 @@ export const requesty = {
     parseModels(raw) {
         return RequestyResponse.parse(raw).data;
     },
-    translateModel(model) {
+    translateModel(model, context) {
         return {
             id: model.id,
-            model: buildRequestyModel(model),
+            model: buildRequestyModel(model, context.existing(model.id)?.base_model),
         };
     },
 } satisfies SyncProvider<RequestyModel>;
