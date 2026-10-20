@@ -1,11 +1,13 @@
+schema = 2
 base_model = "mistral/mistral-small-2603"
+
+[capabilities]
+reasoning = { supported = true, effort = ["none", "low", "medium", "high", "max"] }
 structured_output = true
 
-[[reasoning_options]]
-type = "effort"
-values = ["none", "low", "medium", "high", "max"]
+[cost.text.input]
+price = 0.165
+cache = { read = 0.165 }
 
-[cost]
-input = 0.165
-output = 0.66
-cache_read = 0.165
+[cost.text.output]
+price = 0.66
