@@ -161,7 +161,7 @@ test("uses Requesty pricing bands when top-level prices are null", () => {
   });
 });
 
-test("keeps a hand-linked base_model when the resolver has no match", () => {
+test("keeps a hand-linked base_model and curated status", () => {
   const model = buildRequestyModel(RequestyModel.parse({
     id: "nvidia-nemotron-3-super-120b-a12b",
     created: Date.parse("2026-03-11") / 1_000,
@@ -172,12 +172,13 @@ test("keeps a hand-linked base_model when the resolver has no match", () => {
     supports_tool_calling: true,
     input_price: 0.0000001,
     output_price: 0.0000005,
-  }), "nvidia/nemotron-3-super-120b-a12b");
+  }), { base_model: "nvidia/nemotron-3-super-120b-a12b", status: "deprecated" });
 
   expect(resolveRequestyBaseModel("nvidia-nemotron-3-super-120b-a12b")).toBeUndefined();
   expect(JSON.parse(JSON.stringify(model))).toEqual({
     base_model: "nvidia/nemotron-3-super-120b-a12b",
     structured_output: false,
+    status: "deprecated",
     reasoning_options: [
       { type: "effort", values: ["none", "low", "medium", "high", "max"] },
     ],

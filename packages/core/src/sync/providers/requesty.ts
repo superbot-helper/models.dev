@@ -4,7 +4,7 @@ import path from "node:path";
 import { z } from "zod";
 
 import { inferKimiFamily, ModelFamilyValues } from "../../family.js";
-import type { SyncProvider, SyncedFullModel, SyncedModel } from "../index.js";
+import type { ExistingModel, SyncProvider, SyncedFullModel, SyncedModel } from "../index.js";
 import {
     factorBaseModel,
     resolveModelMetadataBaseModel,
@@ -79,10 +79,11 @@ export type RequestyModel = z.infer<typeof RequestyModel>;
 // ========================================
 
 // A file linked to its lab by hand keeps that base_model when the resolver has
-// no match for the catalog ID.
+// no match for the catalog ID. A curated status is kept: the catalog's
+// `retires` date is not synced.
 export function buildRequestyModel(
     model: RequestyModel,
-    existingBaseModel?: string,
+    existing?: Pick<ExistingModel, "base_model" | "status">,
 ): SyncedModel {
     const toolCall = model.supports_tool_calling;
     const structuredOutput = model.supports_output_json_schema;
@@ -95,7 +96,7 @@ export function buildRequestyModel(
     const cost = buildCost(model);
     const reasoning = model.supports_reasoning;
 
-    const canonical = resolveRequestyBaseModel(model.id) ?? existingBaseModel;
+    const canonical = resolveRequestyBaseModel(model.id) ?? existing?.base_model;
     if (canonical !== undefined) {
         return factorBaseModel(
             canonical,
@@ -105,6 +106,7 @@ export function buildRequestyModel(
                 reasoning_options: reasoningOptions(reasoning),
                 tool_call: toolCall,
                 structured_output: structuredOutput,
+                status: existing?.status,
                 cost,
                 limit,
             },
@@ -129,6 +131,7 @@ export function buildRequestyModel(
         tool_call: toolCall,
         structured_output: structuredOutput,
         open_weights: false,
+        status: existing?.status,
         cost,
         limit,
         modalities: { input, output },
@@ -273,7 +276,7 @@ export const requesty = {
     translateModel(model, context) {
         return {
             id: model.id,
-            model: buildRequestyModel(model, context.existing(model.id)?.base_model),
+            model: buildRequestyModel(model, context.existing(model.id)),
         };
     },
 } satisfies SyncProvider<RequestyModel>;
