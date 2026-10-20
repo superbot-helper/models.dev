@@ -3921,6 +3921,32 @@ test("seeds context pricing tiers from the aggregated sibling on creates", () =>
   ]);
 });
 
+test("LLM Gateway base_model files leave model facts to the lab", () => {
+  const model = buildLLMGatewayModel(llmGatewayModel(), {
+    base_model: "anthropic/claude-fable-5",
+    family: "claude-fable",
+    knowledge: "2020-01",
+    release_date: "2020-01-01",
+    last_updated: "2020-01-01",
+    open_weights: true,
+  });
+  for (const key of ["family", "knowledge", "release_date", "last_updated", "open_weights"]) {
+    expect(model).not.toHaveProperty(key);
+  }
+});
+
+test("reads curation from v2 aggregated siblings", () => {
+  // providers/llmgateway/models/Qwen3.8-27B.toml is a v2 file whose effort
+  // list lives under [capabilities]; mapped deployments still inherit it.
+  const model = buildLLMGatewayMappedModel(llmGatewayMappedModel({
+    id: "novita/qwen3.8-27b",
+    name: "Qwen3.8 27B (NovitaAI)",
+    family: "alibaba",
+    providers: [{ providerId: "novita", vision: false, tools: true, reasoning: true }],
+  }), undefined);
+  expect(model!.reasoning_options).toEqual([{ type: "effort", values: ["low", "medium", "xhigh"] }]);
+});
+
 test("factors perplexity entries without widening the shared prefix map", () => {
   // The perplexity family resolves through resolveModelMetadataBaseModel's
   // exact models/ path match; CANONICAL_PROVIDER_PREFIXES stays untouched so

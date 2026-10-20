@@ -5,6 +5,7 @@ import path from "node:path";
 import { describeModel } from "../../describe.js";
 import { inferKimiFamily, ModelFamilyValues } from "../../family.js";
 import { ReasoningOption } from "../../schema.js";
+import { readProviderModel } from "../../translate.js";
 import type { ExistingModel, SyncProvider, SyncedFullModel, SyncedModel } from "../index.js";
 import { factorBaseModel, resolveModelMetadataBaseModel } from "./openrouter.js";
 
@@ -263,7 +264,7 @@ function siblingCuration(rootID: string): SiblingCuration {
   if (curation === undefined) {
     const filePath = path.join(AGGREGATED_MODELS_DIR, `${rootID}.toml`);
     const authored = existsSync(filePath)
-      ? Bun.TOML.parse(readFileSync(filePath, "utf8")) as SiblingCuration & {
+      ? readProviderModel(filePath) as SiblingCuration & {
           cost?: { tiers?: NonNullable<SyncedFullModel["cost"]>["tiers"] };
         }
       : undefined;
@@ -388,7 +389,8 @@ export function buildLLMGatewayModel(
         structured_output: existing.structured_output,
         status: existing.status,
         interleaved: existing.interleaved,
-        knowledge: existing.knowledge,
+        // Model facts (family, dates, knowledge, open_weights) come from the
+        // lab file; a base_model file never carries them.
         modalities: existing.modalities,
         limit: factoredLimit,
         cost,
