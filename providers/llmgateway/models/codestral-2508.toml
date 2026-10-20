@@ -1,19 +1,11 @@
 schema = 2
-name = "Codestral"
+base_model = "mistral/codestral-2508"
 description = "Mistral coding model for code completion, generation, and developer workflows"
-family = "mistral"
-open_weights = true
-release_date = "2025-07-30"
-
-[modalities]
-input = ["text"]
-output = ["text"]
 
 [capabilities]
 tools = { supported = false }
 reasoning = { supported = false }
 structured_output = true
-temperature = true
 
 [limit]
 context = 256_000

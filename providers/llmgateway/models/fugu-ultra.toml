@@ -1,12 +1,6 @@
 schema = 2
-name = "Fugu Ultra"
+base_model = "sakana/fugu-ultra"
 description = "Quality-first multi-agent model for hard research, analysis, and competitions"
-open_weights = false
-release_date = "2026-06-22"
-
-[modalities]
-input = ["text", "image"]
-output = ["text"]
 
 [capabilities]
 tools = { supported = true }
@@ -15,7 +9,6 @@ structured_output = false
 temperature = true
 
 [limit]
-context = 1_000_000
 output = 1_000_000
 
 [cost.text.input]

@@ -1,8 +1,6 @@
 schema = 2
-name = "Qwen3.8 27B"
+base_model = "alibaba/qwen3.8-27b"
 description = "Reasoning model for deliberate analysis, multi-step problem solving, and tool use"
-open_weights = false
-release_date = "2026-09-02"
 
 [modalities]
 input = ["text"]
@@ -12,11 +10,9 @@ output = ["text"]
 tools = { supported = true }
 reasoning = { supported = true, effort = ["low", "medium", "xhigh"] }
 structured_output = false
-temperature = true
 
 [limit]
 context = 262_000
-output = 32_768
 
 [cost.text.input]
 price = 0.08

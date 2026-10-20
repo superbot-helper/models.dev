@@ -1,23 +1,11 @@
 schema = 2
-name = "Qwen3 Coder Next"
+base_model = "alibaba/qwen3-coder-next"
 description = "Qwen coding model for software agents, repository edits, and code reasoning"
-family = "qwen"
-open_weights = false
-release_date = "2025-10-15"
-
-[modalities]
-input = ["text"]
-output = ["text"]
 
 [capabilities]
 tools = { supported = true }
 reasoning = { supported = true }
 structured_output = true
-temperature = true
-
-[limit]
-context = 262_144
-output = 65_536
 
 [cost.text.input]
 price = 0.108

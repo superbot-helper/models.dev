@@ -1,8 +1,7 @@
 schema = 2
-name = "Qwen3.7 Flash"
+base_model = "alibaba/qwen3.7-flash"
+base_model_omit = ["limit.input"]
 description = "Multimodal reasoning model for visual analysis, planning, and tool use"
-open_weights = false
-release_date = "2026-07-27"
 
 [modalities]
 input = ["text", "image"]
@@ -12,7 +11,6 @@ output = ["text"]
 tools = { supported = true }
 reasoning = { supported = true, effort = ["none", "minimal", "low", "medium", "high", "xhigh", "max"] }
 structured_output = false
-temperature = true
 
 [limit]
 context = 983_616

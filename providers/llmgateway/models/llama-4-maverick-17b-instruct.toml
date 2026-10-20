@@ -1,19 +1,11 @@
 schema = 2
-name = "Llama 4 Maverick 17B Instruct"
+base_model = "meta/llama-4-maverick-17b-instruct"
 description = "Open multimodal Llama model for strong reasoning and fast responses"
-family = "llama"
-open_weights = true
-release_date = "2025-04-05"
-
-[modalities]
-input = ["text", "image"]
-output = ["text"]
 
 [capabilities]
 tools = { supported = false }
 reasoning = { supported = false }
 structured_output = false
-temperature = true
 
 [limit]
 context = 1_048_576

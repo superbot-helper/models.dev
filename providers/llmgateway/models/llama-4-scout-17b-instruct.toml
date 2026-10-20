@@ -1,19 +1,11 @@
 schema = 2
-name = "Llama 4 Scout 17B Instruct"
+base_model = "meta/llama-4-scout-17b-instruct"
 description = "Open multimodal Llama model for long-context analysis and efficient agents"
-family = "llama"
-open_weights = true
-release_date = "2025-04-05"
-
-[modalities]
-input = ["text", "image"]
-output = ["text"]
 
 [capabilities]
 tools = { supported = false }
 reasoning = { supported = false }
 structured_output = false
-temperature = true
 
 [limit]
 context = 131_072

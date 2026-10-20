@@ -1,9 +1,6 @@
 schema = 2
-name = "Fugu Max"
+base_model = "sakana/fugu-max"
 description = "Multi-agent model for routing expert agents across complex analytical tasks"
-family = "fugu"
-open_weights = false
-release_date = "2026-09-11"
 
 [modalities]
 input = ["text", "image"]
@@ -16,7 +13,6 @@ structured_output = true
 temperature = true
 
 [limit]
-context = 1_000_000
 output = 1_000_000
 
 [cost.text.input]

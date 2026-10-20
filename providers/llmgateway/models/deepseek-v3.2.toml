@@ -1,9 +1,6 @@
 schema = 2
-name = "DeepSeek V3.2"
+base_model = "deepseek/deepseek-v3.2"
 description = "DeepSeek chat model for instruction following, coding, and analysis"
-family = "deepseek"
-open_weights = true
-release_date = "2025-09-29"
 
 [modalities]
 input = ["text", "image"]
@@ -13,7 +10,6 @@ output = ["text"]
 tools = { supported = true }
 reasoning = { supported = true, toggle = true }
 structured_output = true
-temperature = true
 
 [limit]
 context = 163_840

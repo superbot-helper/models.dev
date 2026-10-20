@@ -1,9 +1,6 @@
 schema = 2
-name = "Gemini 4 Argon"
+base_model = "google/gemini-4-argon"
 description = "Gemini multimodal model for text, image, audio, video, and document tasks"
-family = "gemini"
-open_weights = false
-release_date = "2026-09-30"
 
 [modalities]
 input = ["text", "image", "audio"]
@@ -13,10 +10,8 @@ output = ["text"]
 tools = { supported = true }
 reasoning = { supported = true, effort = ["high"] }
 structured_output = true
-temperature = false
 
 [limit]
-context = 1_048_576
 output = 1_048_576
 
 [cost.text.input]
