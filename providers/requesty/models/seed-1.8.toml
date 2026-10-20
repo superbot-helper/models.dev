@@ -1,13 +1,5 @@
 schema = 2
-name = "seed-1.8"
-description = "Optimized specifically for multimodal agent scenarios. It features enhanced agent capabilities, upgraded multimodal comprehension, and more flexible context management."
-family = "seed"
-open_weights = false
-release_date = "2026-05-27"
-
-[modalities]
-input = ["text", "image"]
-output = ["text"]
+base_model = "bytedance-seed/seed-1-8"
 
 [capabilities]
 tools = { supported = true }
@@ -15,7 +7,6 @@ reasoning = { supported = true, effort = ["none", "low", "medium", "high", "max"
 structured_output = false
 
 [limit]
-context = 256_000
 output = 256_000
 
 [cost.text.input]

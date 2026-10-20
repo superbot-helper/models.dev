@@ -1,13 +1,5 @@
 schema = 2
-name = "nvidia-nemotron-3-ultra"
-description = "NVIDIA Nemotron 3 Ultra is NVIDIA's strongest open-weights reasoning model, positioned near GPT-5.4 Mini (xhigh) and ahead of DeepSeek V4-Flash and Qwen3.5-397B-A17B."
-family = "nemotron"
-open_weights = false
-release_date = "2026-06-23"
-
-[modalities]
-input = ["text"]
-output = ["text"]
+base_model = "nvidia/nemotron-3-ultra-550b-a55b"
 
 [capabilities]
 tools = { supported = false }
